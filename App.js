@@ -47,7 +47,6 @@ export default function App() {
   const [status6, setStatus6] = useState(false);
 
   const db = getDatabase();
-  //Hi fireds
 
   useEffect(() => {
     const starCountRef = ref(db, "swiches/");
