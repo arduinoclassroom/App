@@ -52,7 +52,7 @@ export default function App() {
     const starCountRef = ref(db, "swiches/");
     onValue(starCountRef, (snapshot) => {
       const data = snapshot.val();
-      console.log(data);
+      // console.log(data);
       setStatus1(data.L1.status);
       setStatus2(data.L2.status);
       setStatus3(data.L3.status);
