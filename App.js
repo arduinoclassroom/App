@@ -14,6 +14,7 @@ import { db, ref } from "./firebase";
 import { getDatabase, set, onValue } from "firebase/database";
 import BottomSheet from "./component/BottomSheet";
 import { FirebaseError } from "firebase/app";
+import * as Haptics from "expo-haptics";
 
 export default function App() {
   const [imagePath1, setImagePath1] = useState(require("./img/bulb_on.png"));
@@ -71,6 +72,7 @@ export default function App() {
 
   const changeName1 = () => {
     setBottomSheetVisible1(!isBottomSheetVisible1);
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     if (isBottomSheetVisible1) {
       set(ref(db, "swiches/N1/"), {
         N1: bulbName1,
@@ -80,6 +82,7 @@ export default function App() {
 
   const changeName2 = () => {
     setBottomSheetVisible2(!isBottomSheetVisible2);
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     if (isBottomSheetVisible2) {
       set(ref(db, "swiches/N2/"), {
         N2: bulbName2,
@@ -89,6 +92,7 @@ export default function App() {
 
   const changeName3 = () => {
     setBottomSheetVisible3(!isBottomSheetVisible3);
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     if (isBottomSheetVisible3) {
       set(ref(db, "swiches/N3/"), {
         N3: bulbName3,
@@ -98,6 +102,7 @@ export default function App() {
 
   const changeName4 = () => {
     setBottomSheetVisible4(!isBottomSheetVisible4);
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     if (isBottomSheetVisible4) {
       set(ref(db, "swiches/N4/"), {
         N4: bulbName4,
@@ -106,6 +111,7 @@ export default function App() {
   };
   const changeName5 = () => {
     setBottomSheetVisible5(!isBottomSheetVisible5);
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     if (isBottomSheetVisible5) {
       set(ref(db, "swiches/N5/"), {
         N5: bulbName5,
@@ -114,6 +120,7 @@ export default function App() {
   };
   const changeName6 = () => {
     setBottomSheetVisible6(!isBottomSheetVisible6);
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     if (isBottomSheetVisible6) {
       set(ref(db, "swiches/N6/"), {
         N6: bulbName6,
@@ -122,6 +129,7 @@ export default function App() {
   };
 
   const changeImage1 = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setStatus1(!status1);
     set(ref(db, "swiches/L1/"), {
       status: !status1,
@@ -129,6 +137,7 @@ export default function App() {
   };
 
   const changeImage2 = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setStatus2(!status2);
     set(ref(db, "swiches/L2/"), {
       status: !status2,
@@ -136,6 +145,7 @@ export default function App() {
   };
 
   const changeImage3 = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setStatus3(!status3);
     set(ref(db, "swiches/L3/"), {
       status: !status3,
@@ -143,6 +153,7 @@ export default function App() {
   };
 
   const changeImage4 = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setStatus4(!status4);
     set(ref(db, "swiches/L4/"), {
       status: !status4,
@@ -150,6 +161,7 @@ export default function App() {
   };
 
   const changeImage5 = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setStatus5(!status5);
     set(ref(db, "swiches/L5/"), {
       status: !status5,
@@ -157,6 +169,7 @@ export default function App() {
   };
 
   const changeImage6 = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setStatus6(!status6);
     set(ref(db, "swiches/L6/"), {
       status: !status6,
