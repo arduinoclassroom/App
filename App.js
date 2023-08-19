@@ -1,19 +1,16 @@
 import { StatusBar } from "expo-status-bar";
 import { useState, useEffect } from "react";
-import { Stack, ActivityIndicator } from "@react-native-material/core";
-
+import { ActivityIndicator } from "@react-native-material/core";
+import Dialog from "react-native-dialog";
 import {
   StyleSheet,
   Text,
   View,
   Image,
   TouchableOpacity,
-  Switch,
 } from "react-native";
 import { db, ref } from "./firebase";
 import { getDatabase, set, onValue } from "firebase/database";
-import BottomSheet from "./component/BottomSheet";
-import { FirebaseError } from "firebase/app";
 import * as Haptics from "expo-haptics";
 
 export default function App() {
@@ -31,13 +28,6 @@ export default function App() {
   const [bulbName5, setName5] = useState("Light 5");
   const [bulbName6, setName6] = useState("Light 6");
 
-  const [isBottomSheetVisible1, setBottomSheetVisible1] = useState(false);
-  const [isBottomSheetVisible2, setBottomSheetVisible2] = useState(false);
-  const [isBottomSheetVisible3, setBottomSheetVisible3] = useState(false);
-  const [isBottomSheetVisible4, setBottomSheetVisible4] = useState(false);
-  const [isBottomSheetVisible5, setBottomSheetVisible5] = useState(false);
-  const [isBottomSheetVisible6, setBottomSheetVisible6] = useState(false);
-
   const [firebaseState, setfirebaseState] = useState(false);
 
   const [status1, setStatus1] = useState(false);
@@ -46,6 +36,15 @@ export default function App() {
   const [status4, setStatus4] = useState(false);
   const [status5, setStatus5] = useState(false);
   const [status6, setStatus6] = useState(false);
+
+  const [defaultName, setdefaultName] = useState("");
+
+  const [dialogVisible1, setDialogVisible1] = useState(false);
+  const [dialogVisible2, setDialogVisible2] = useState(false);
+  const [dialogVisible3, setDialogVisible3] = useState(false);
+  const [dialogVisible4, setDialogVisible4] = useState(false);
+  const [dialogVisible5, setDialogVisible5] = useState(false);
+  const [dialogVisible6, setDialogVisible6] = useState(false);
 
   const db = getDatabase();
 
@@ -71,61 +70,36 @@ export default function App() {
   }, []);
 
   const changeName1 = () => {
-    setBottomSheetVisible1(!isBottomSheetVisible1);
+    setdefaultName(bulbName1);
+    setDialogVisible1(!dialogVisible1);
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-    if (isBottomSheetVisible1) {
-      set(ref(db, "swiches/N1/"), {
-        N1: bulbName1,
-      });
-    }
   };
 
   const changeName2 = () => {
-    setBottomSheetVisible2(!isBottomSheetVisible2);
+    setdefaultName(bulbName2);
+    setDialogVisible2(!dialogVisible2);
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-    if (isBottomSheetVisible2) {
-      set(ref(db, "swiches/N2/"), {
-        N2: bulbName2,
-      });
-    }
   };
 
   const changeName3 = () => {
-    setBottomSheetVisible3(!isBottomSheetVisible3);
+    setdefaultName(bulbName3);
+    setDialogVisible3(!dialogVisible3);
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-    if (isBottomSheetVisible3) {
-      set(ref(db, "swiches/N3/"), {
-        N3: bulbName3,
-      });
-    }
   };
-
   const changeName4 = () => {
-    setBottomSheetVisible4(!isBottomSheetVisible4);
+    setdefaultName(bulbName4);
+    setDialogVisible4(!dialogVisible4);
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-    if (isBottomSheetVisible4) {
-      set(ref(db, "swiches/N4/"), {
-        N4: bulbName4,
-      });
-    }
   };
   const changeName5 = () => {
-    setBottomSheetVisible5(!isBottomSheetVisible5);
+    setdefaultName(bulbName5);
+    setDialogVisible5(!dialogVisible5);
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-    if (isBottomSheetVisible5) {
-      set(ref(db, "swiches/N5/"), {
-        N5: bulbName5,
-      });
-    }
   };
   const changeName6 = () => {
-    setBottomSheetVisible6(!isBottomSheetVisible6);
+    setdefaultName(bulbName6);
+    setDialogVisible6(!dialogVisible6);
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-    if (isBottomSheetVisible6) {
-      set(ref(db, "swiches/N6/"), {
-        N6: bulbName6,
-      });
-    }
   };
 
   const changeImage1 = () => {
@@ -212,50 +186,171 @@ export default function App() {
     );
   }, [status6]);
 
+  const cancel1 = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    setDialogVisible1(!dialogVisible1);
+    setName1(defaultName);
+    setdefaultName("");
+  };
+
+  const cancel2 = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    setDialogVisible2(!dialogVisible2);
+    setName2(defaultName);
+    setdefaultName("");
+  };
+  const cancel3 = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    setDialogVisible3(!dialogVisible3);
+    setName3(defaultName);
+    setdefaultName("");
+  };
+  const cancel4 = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    setDialogVisible4(!dialogVisible4);
+    setName4(defaultName);
+    setdefaultName("");
+  };
+  const cancel5 = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    setDialogVisible5(!dialogVisible5);
+    setName5(defaultName);
+    setdefaultName("");
+  };
+  const cancel6 = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    setDialogVisible6(!dialogVisible6);
+    setName6(defaultName);
+    setdefaultName("");
+  };
+
+  const ok1 = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    setDialogVisible1(!dialogVisible1);
+    if (dialogVisible1) {
+      set(ref(db, "swiches/N1/"), {
+        N1: bulbName1,
+      });
+    }
+  };
+  const ok2 = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    setDialogVisible2(!dialogVisible2);
+    if (dialogVisible2) {
+      set(ref(db, "swiches/N2/"), {
+        N2: bulbName2,
+      });
+    }
+  };
+  const ok3 = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    setDialogVisible3(!dialogVisible3);
+    if (dialogVisible3) {
+      set(ref(db, "swiches/N3/"), {
+        N3: bulbName3,
+      });
+    }
+  };
+  const ok4 = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    setDialogVisible4(!dialogVisible4);
+    if (dialogVisible4) {
+      set(ref(db, "swiches/N4/"), {
+        N4: bulbName4,
+      });
+    }
+  };
+  const ok5 = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    setDialogVisible5(!dialogVisible5);
+    if (dialogVisible5) {
+      set(ref(db, "swiches/N5/"), {
+        N5: bulbName5,
+      });
+    }
+  };
+  const ok6 = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    setDialogVisible6(!dialogVisible6);
+    if (dialogVisible6) {
+      set(ref(db, "swiches/N6/"), {
+        N6: bulbName6,
+      });
+    }
+  };
+
   return (
     <View>
-      <BottomSheet
-        visible={isBottomSheetVisible1}
-        onClose={changeName1}
-        bulbName={bulbName1}
-        setName={setName1}
-      />
-      <BottomSheet
-        visible={isBottomSheetVisible2}
-        onClose={changeName2}
-        bulbName={bulbName2}
-        setName={setName2}
-      />
-      <BottomSheet
-        visible={isBottomSheetVisible3}
-        onClose={changeName3}
-        bulbName={bulbName3}
-        setName={setName3}
-      />
-      <BottomSheet
-        visible={isBottomSheetVisible4}
-        onClose={changeName4}
-        bulbName={bulbName4}
-        setName={setName4}
-      />
-      <BottomSheet
-        visible={isBottomSheetVisible5}
-        onClose={changeName5}
-        bulbName={bulbName5}
-        setName={setName5}
-      />
-      <BottomSheet
-        visible={isBottomSheetVisible6}
-        onClose={changeName6}
-        bulbName={bulbName6}
-        setName={setName6}
-      />
+      <Dialog.Container visible={dialogVisible1}>
+        <Dialog.Title>Rename Your Bulb</Dialog.Title>
+        <Dialog.Input
+          onChangeText={setName1}
+          maxLength={11}
+          value={bulbName1}
+        />
+        <Dialog.Button label="Cancel" onPress={cancel1} />
+        <Dialog.Button label="OK" onPress={ok1} />
+      </Dialog.Container>
+      <Dialog.Container visible={dialogVisible2}>
+        <Dialog.Title>Rename Your Bulb</Dialog.Title>
+        <Dialog.Input
+          onChangeText={setName2}
+          maxLength={11}
+          value={bulbName2}
+        />
+        <Dialog.Button label="Cancel" onPress={cancel2} />
+        <Dialog.Button label="OK" onPress={ok2} />
+      </Dialog.Container>
+      <Dialog.Container visible={dialogVisible3}>
+        <Dialog.Title>Rename Your Bulb</Dialog.Title>
+        <Dialog.Input
+          onChangeText={setName3}
+          maxLength={11}
+          value={bulbName3}
+        />
+        <Dialog.Button label="Cancel" onPress={cancel3} />
+        <Dialog.Button label="OK" onPress={ok3} />
+      </Dialog.Container>
+
+      <Dialog.Container visible={dialogVisible4}>
+        <Dialog.Title>Rename Your Bulb</Dialog.Title>
+        <Dialog.Input
+          onChangeText={setName4}
+          maxLength={11}
+          value={bulbName4}
+        />
+        <Dialog.Button label="Cancel" onPress={cancel4} />
+        <Dialog.Button label="OK" onPress={ok4} />
+      </Dialog.Container>
+      <Dialog.Container visible={dialogVisible5}>
+        <Dialog.Title>Rename Your Bulb</Dialog.Title>
+        <Dialog.Input
+          onChangeText={setName5}
+          maxLength={11}
+          value={bulbName5}
+        />
+        <Dialog.Button label="Cancel" onPress={cancel5} />
+        <Dialog.Button label="OK" onPress={ok5} />
+      </Dialog.Container>
+
+      <Dialog.Container visible={dialogVisible6}>
+        <Dialog.Title>Rename Your Bulb</Dialog.Title>
+        <Dialog.Input
+          onChangeText={setName6}
+          maxLength={11}
+          value={bulbName6}
+        />
+        <Dialog.Button label="Cancel" onPress={cancel6} />
+        <Dialog.Button label="OK" onPress={ok6} />
+      </Dialog.Container>
+
       <StatusBar style="auto" />
       <View style={styles.container}>
         <TouchableOpacity onPress={changeImage1} onLongPress={changeName1}>
           <Image style={styles.img} source={imagePath1} />
           <Text style={styles.text}>{bulbName1}</Text>
         </TouchableOpacity>
+
         <TouchableOpacity onPress={changeImage2} onLongPress={changeName2}>
           <Image style={styles.img} source={imagePath2} />
           <Text style={styles.text}>{bulbName2}</Text>
@@ -297,11 +392,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
   },
   color: {
     textAlign: "center",
     color: "dodgerblue",
-    fontWeight: 500,
+    fontWeight: "500",
     borderColor: "deepskyblue",
     borderWidth: 2,
     borderRadius: 8,
@@ -312,8 +408,9 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 10,
     marginTop: 30,
-    marginLeft: 20,
+    margin: 10,
   },
+
   box: {
     width: 50,
     height: 50,
@@ -321,8 +418,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   text: {
-    marginLeft: 20,
-    fontWeight: 500,
+    fontWeight: "500",
     textAlign: "center",
   },
   input: {
