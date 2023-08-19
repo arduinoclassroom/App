@@ -199,18 +199,21 @@ export default function App() {
     setName2(defaultName);
     setdefaultName("");
   };
+
   const cancel3 = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     setDialogVisible3(!dialogVisible3);
     setName3(defaultName);
     setdefaultName("");
   };
+
   const cancel4 = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     setDialogVisible4(!dialogVisible4);
     setName4(defaultName);
     setdefaultName("");
   };
+  
   const cancel5 = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     setDialogVisible5(!dialogVisible5);
