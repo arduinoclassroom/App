@@ -9,6 +9,7 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
+import { PlatformColor } from "react-native";
 import { db, ref } from "./firebase";
 import { getDatabase, set, onValue } from "firebase/database";
 import * as Haptics from "expo-haptics";
