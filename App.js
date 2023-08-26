@@ -4,7 +4,6 @@ import { ActivityIndicator } from "@react-native-material/core";
 import Dialog from "react-native-dialog";
 import {
   StyleSheet,
-  Text,
   View,
   Image,
   TouchableOpacity,
@@ -14,7 +13,31 @@ import { db, ref } from "./firebase";
 import { getDatabase, set, onValue } from "firebase/database";
 import * as Haptics from "expo-haptics";
 
+import React, { useCallback, useMemo, useRef } from "react";
+import { Button, TextInput, Text } from "react-native-paper";
+import {
+  BottomSheetModal,
+  BottomSheetModalProvider,
+} from "@gorhom/bottom-sheet";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+
 export default function App() {
+
+  const bottomSheetModalRef = useRef(null);
+  const snapPoints = useMemo(() => ["25%", "60%"], []);
+  const handlePresentModalPress = useCallback(() => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+    bottomSheetModalRef.current?.present();
+  }, []);
+  const handleSheetChanges = useCallback((index: number) => {
+    console.log("handleSheetChanges", index);
+  }, []);
+  const handleCloseModalPress = useCallback(() => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+
+    bottomSheetModalRef.current?.close();
+  }, []);
+
   const [imagePath1, setImagePath1] = useState(require("./img/bulb_on.png"));
   const [imagePath2, setImagePath2] = useState(require("./img/bulb_on.png"));
   const [imagePath3, setImagePath3] = useState(require("./img/bulb_on.png"));
@@ -284,116 +307,153 @@ export default function App() {
   };
 
   return (
-    <View>
-      <Dialog.Container visible={dialogVisible1}>
-        <Dialog.Title>Rename Your Bulb</Dialog.Title>
-        <Dialog.Input
-          onChangeText={setName1}
-          maxLength={11}
-          value={bulbName1}
-        />
-        <Dialog.Button label="Cancel" onPress={cancel1} />
-        <Dialog.Button label="OK" onPress={ok1} />
-      </Dialog.Container>
-      <Dialog.Container visible={dialogVisible2}>
-        <Dialog.Title>Rename Your Bulb</Dialog.Title>
-        <Dialog.Input
-          onChangeText={setName2}
-          maxLength={11}
-          value={bulbName2}
-        />
-        <Dialog.Button label="Cancel" onPress={cancel2} />
-        <Dialog.Button label="OK" onPress={ok2} />
-      </Dialog.Container>
-      <Dialog.Container visible={dialogVisible3}>
-        <Dialog.Title>Rename Your Bulb</Dialog.Title>
-        <Dialog.Input
-          onChangeText={setName3}
-          maxLength={11}
-          value={bulbName3}
-        />
-        <Dialog.Button label="Cancel" onPress={cancel3} />
-        <Dialog.Button label="OK" onPress={ok3} />
-      </Dialog.Container>
+    <GestureHandlerRootView style={{ flex: 1, backgroundColor: "#F2F3F4" }}>
+      <BottomSheetModalProvider>
+        <View>
+          <Dialog.Container visible={dialogVisible1}>
+            <Dialog.Title>Rename Your Bulb</Dialog.Title>
+            <Dialog.Input
+              onChangeText={setName1}
+              maxLength={11}
+              value={bulbName1}
+            />
+            <Dialog.Button label="Cancel" onPress={cancel1} />
+            <Dialog.Button label="OK" onPress={ok1} />
+          </Dialog.Container>
+          <Dialog.Container visible={dialogVisible2}>
+            <Dialog.Title>Rename Your Bulb</Dialog.Title>
+            <Dialog.Input
+              onChangeText={setName2}
+              maxLength={11}
+              value={bulbName2}
+            />
+            <Dialog.Button label="Cancel" onPress={cancel2} />
+            <Dialog.Button label="OK" onPress={ok2} />
+          </Dialog.Container>
+          <Dialog.Container visible={dialogVisible3}>
+            <Dialog.Title>Rename Your Bulb</Dialog.Title>
+            <Dialog.Input
+              onChangeText={setName3}
+              maxLength={11}
+              value={bulbName3}
+            />
+            <Dialog.Button label="Cancel" onPress={cancel3} />
+            <Dialog.Button label="OK" onPress={ok3} />
+          </Dialog.Container>
 
-      <Dialog.Container visible={dialogVisible4}>
-        <Dialog.Title>Rename Your Bulb</Dialog.Title>
-        <Dialog.Input
-          onChangeText={setName4}
-          maxLength={11}
-          value={bulbName4}
-        />
-        <Dialog.Button label="Cancel" onPress={cancel4} />
-        <Dialog.Button label="OK" onPress={ok4} />
-      </Dialog.Container>
-      <Dialog.Container visible={dialogVisible5}>
-        <Dialog.Title>Rename Your Bulb</Dialog.Title>
-        <Dialog.Input
-          onChangeText={setName5}
-          maxLength={11}
-          value={bulbName5}
-        />
-        <Dialog.Button label="Cancel" onPress={cancel5} />
-        <Dialog.Button label="OK" onPress={ok5} />
-      </Dialog.Container>
+          <Dialog.Container visible={dialogVisible4}>
+            <Dialog.Title>Rename Your Bulb</Dialog.Title>
+            <Dialog.Input
+              onChangeText={setName4}
+              maxLength={11}
+              value={bulbName4}
+            />
+            <Dialog.Button label="Cancel" onPress={cancel4} />
+            <Dialog.Button label="OK" onPress={ok4} />
+          </Dialog.Container>
+          <Dialog.Container visible={dialogVisible5}>
+            <Dialog.Title>Rename Your Bulb</Dialog.Title>
+            <Dialog.Input
+              onChangeText={setName5}
+              maxLength={11}
+              value={bulbName5}
+            />
+            <Dialog.Button label="Cancel" onPress={cancel5} />
+            <Dialog.Button label="OK" onPress={ok5} />
+          </Dialog.Container>
 
-      <Dialog.Container visible={dialogVisible6}>
-        <Dialog.Title>Rename Your Bulb</Dialog.Title>
-        <Dialog.Input
-          onChangeText={setName6}
-          maxLength={11}
-          value={bulbName6}
-        />
-        <Dialog.Button label="Cancel" onPress={cancel6} />
-        <Dialog.Button label="OK" onPress={ok6} />
-      </Dialog.Container>
+          <Dialog.Container visible={dialogVisible6}>
+            <Dialog.Title>Rename Your Bulb</Dialog.Title>
+            <Dialog.Input
+              onChangeText={setName6}
+              maxLength={11}
+              value={bulbName6}
+            />
+            <Dialog.Button label="Cancel" onPress={cancel6} />
+            <Dialog.Button label="OK" onPress={ok6} />
+          </Dialog.Container>
 
-      <StatusBar style="auto" />
-      <View style={styles.container}>
-        <TouchableOpacity onPress={changeImage1} onLongPress={changeName1}>
-          <Image style={styles.img} source={imagePath1} />
-          <Text style={styles.text}>{bulbName1}</Text>
-        </TouchableOpacity>
+          <StatusBar style="auto" />
+          <View style={styles.container}>
+            <TouchableOpacity
+              onPress={changeImage1}
+              onLongPress={handlePresentModalPress}>
+              <Image style={styles.img} source={imagePath1} />
+              <Text style={styles.text}>{bulbName1}</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity onPress={changeImage2} onLongPress={changeName2}>
-          <Image style={styles.img} source={imagePath2} />
-          <Text style={styles.text}>{bulbName2}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={changeImage3} onLongPress={changeName3}>
-          <Image style={styles.img} source={imagePath3} />
-          <Text style={styles.text}>{bulbName3}</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.container}>
-        <TouchableOpacity onPress={changeImage4} onLongPress={changeName4}>
-          <Image style={styles.img} source={imagePath4} />
-          <Text style={styles.text}>{bulbName4}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={changeImage5} onLongPress={changeName5}>
-          <Image style={styles.img} source={imagePath5} />
-          <Text style={styles.text}>{bulbName5}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={changeImage6} onLongPress={changeName6}>
-          <Image style={styles.img} source={imagePath6} />
-          <Text style={styles.text}>{bulbName6}</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={{ marginTop: 305 }}>
-        {!firebaseState && (
-          <ActivityIndicator
-            style={{ alignItems: "center" }}
-            size={"large"}
-            color="0000"
-          />
-        )}
-      </View>
-    </View>
+            <TouchableOpacity onPress={changeImage2} onLongPress={changeName2}>
+              <Image style={styles.img} source={imagePath2} />
+              <Text style={styles.text}>{bulbName2}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={changeImage3} onLongPress={changeName3}>
+              <Image style={styles.img} source={imagePath3} />
+              <Text style={styles.text}>{bulbName3}</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.container}>
+            <TouchableOpacity onPress={changeImage4} onLongPress={changeName4}>
+              <Image style={styles.img} source={imagePath4} />
+              <Text style={styles.text}>{bulbName4}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={changeImage5} onLongPress={changeName5}>
+              <Image style={styles.img} source={imagePath5} />
+              <Text style={styles.text}>{bulbName5}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={changeImage6} onLongPress={changeName6}>
+              <Image style={styles.img} source={imagePath6} />
+              <Text style={styles.text}>{bulbName6}</Text>
+            </TouchableOpacity>
+          </View>
+
+          <BottomSheetModal
+            ref={bottomSheetModalRef}
+            index={1}
+            snapPoints={snapPoints}
+            onChange={handleSheetChanges}
+            enableDismissOnClose={true}
+            style={{
+              shadowColor: "#000",
+              shadowOffset: { width: 0, height: 1 },
+              shadowOpacity: 0.8,
+              shadowRadius: 2,
+              elevation: 5,
+            }}>
+            <View style={styles.contentContainer}>
+              <Text style={styles.titleText} variant="titleLarge">
+                Change Your Bulb Name
+              </Text>
+              <TextInput
+                style={styles.input}
+                label="Bulb Name"
+                mode="outlined"
+                onChangeText={setName1}
+                maxLength={11}
+                value={bulbName1}
+              />
+              <Button mode="contained" onPress={handleCloseModalPress}>
+                Done
+              </Button>
+            </View>
+          </BottomSheetModal>
+
+          <View style={{ marginTop: 305 }}>
+            {!firebaseState && (
+              <ActivityIndicator
+                style={{ alignItems: "center" }}
+                size={"large"}
+                color="0000"
+              />
+            )}
+          </View>
+        </View>
+      </BottomSheetModalProvider>
+    </GestureHandlerRootView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#fff",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
@@ -426,12 +486,17 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
+    width: 300,
+    marginBottom: 20,
+  },
+  titleText: {
+    marginBottom: 15,
+    marginTop: 10,
     textAlign: "center",
-    color: "red",
+  },
+  contentContainer: {
+    flex: 1,
+    alignItems: "center",
   },
   firebaseState: {
     textAlign: "center",
